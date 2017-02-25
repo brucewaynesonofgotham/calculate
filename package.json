@@ -30,8 +30,14 @@
   "dependencies": {
     "babel-cli": "^6.18.0",
     "babel-runtime": "^6.11.6",
+    "body-parser": "^1.16.1",
+    "bootstrap": "^3.3.7",
     "cors": "^2.8.1",
-    "express": "^4.14.0"
+    "ejs": "^2.5.6",
+    "express": "^4.14.0",
+    "jade": "^1.11.0",
+    "merge": "^1.2.0",
+    "mysql": "github:mysqljs/mysql"
   },
   "devDependencies": {
     "babel-cli": "^6.16.0",
