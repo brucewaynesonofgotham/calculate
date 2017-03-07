@@ -37,7 +37,9 @@
     "express": "^4.14.0",
     "jade": "^1.11.0",
     "merge": "^1.2.0",
-    "mysql": "github:mysqljs/mysql"
+    "mysql": "github:mysqljs/mysql",
+    "nodemailer": "^2.7.2",
+    "path": "^0.12.7"
   },
   "devDependencies": {
     "babel-cli": "^6.16.0",

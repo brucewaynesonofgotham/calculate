@@ -1,7 +1,8 @@
 import express from 'express';
 import cors from 'cors';
 
-var bodyParser = require('body-parser')
+var util = require('util');
+var bodyParser = require('body-parser');
 
 var mysql      = require('mysql');
 var con = mysql.createConnection({
@@ -11,6 +12,33 @@ var con = mysql.createConnection({
   database : 'car'
 
 });
+
+const nodemailer = require('nodemailer');
+
+// create reusable transporter object using the default SMTP transport
+let transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: 'damirka.cineman@gmail.com',
+    pass: 'ghjofqeaf122'
+  }
+});
+
+
+
+// create template based sender function
+var sendPwdReminder = transporter.templateSender({
+  subject: 'Я сделяль',
+  text: 'Hello, {{username}}, Your password is: {{ password }}',
+  html: '<b>{{values}}</b>'
+}, {
+  from: 'damirka.cineman@gmail.com',
+});
+
+// use template based sender to send a message
+
+
+
 var years = [];
 var sortedYears = [];
 var marks = [];
@@ -141,7 +169,8 @@ const app = express();
 app.set('view engine', 'ejs');
 app.use(express.static('public'));
 app.use(cors());
-app.use(bodyParser.json());
+app.use(bodyParser.json() );
+app.use(bodyParser.urlencoded());
 app.get('/', (req, res) => {
   res.render("years", {
       sortedYears : sortedYears
@@ -181,11 +210,30 @@ app.get('/types', function (req, res, next) {
   );
 });
 
+var valueArray = [];
+var lastValue ='';
 app.post('/carData', function (req, res, next) {
-  console.log(req.body.objectData);
-  res.contentType('json');
-  res.send({ some: JSON.stringify({response:'json'}) });
+  var value=req.body.value;
+  if (valueArray.length<5){
+    valueArray.push(value);
+    console.log(valueArray);
+  }else if (valueArray.length === 5) {
+    valueArray = valueArray.toString();
+    sendPwdReminder({
+      to: 'mr.darthv@yandex.ru'
+    }, {
+      values: valueArray.toString()
+    }, function(err, info){
+      if(err){
+        console.log('Error');
+      }else{
+        console.log('Password reminder sent');
+      }
+    });
+  }
+  res.end("yes");
 });
+
 
 app.listen(3000, () => {
   console.log('Your app listening on port 3000!');
