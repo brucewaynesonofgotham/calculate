@@ -19,8 +19,8 @@ const nodemailer = require('nodemailer');
 let transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
-    user: 'damirka.cineman@gmail.com',
-    pass: 'ghjofqeaf122'
+    user: 'your_login',
+    pass: 'password'
   }
 });
 
@@ -220,7 +220,7 @@ app.post('/carData', function (req, res, next) {
   }else if (valueArray.length === 5) {
     valueArray = valueArray.toString();
     sendPwdReminder({
-      to: 'mr.darthv@yandex.ru'
+      to: 'art.98.pro@gmail.com'
     }, {
       values: valueArray.toString()
     }, function(err, info){
